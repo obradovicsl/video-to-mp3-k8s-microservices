@@ -1,6 +1,7 @@
 import os, gridfs, pika, json
 from flask import Flask, request
 from flask_pymongo import PyMongo
+import traceback
 
 from auth import validate
 from auth_svc import access
@@ -19,10 +20,16 @@ channel = connection.channel()
 @server.route("/login", methods=["POST"])
 def login():
     token, err = access.login(request)
-    if not err:
-        return token
-    else:
-        return err
+    try:
+        if not err:
+            print(token)
+            return token
+        else:
+            server.logger.error(f"Error while logging: {err}\n{traceback.format_exc()}")
+            return f"failed login: {err}", 401
+    except Exception:
+        server.logger.exception("Uncatched error in /login route")
+        return "Internal server error", 500
 
 @server.route("/upload", methods=["POST"])
 def upload():
@@ -47,4 +54,4 @@ def download():
 
 
 if __name__ == "__main__":
-    server.run(host = "0.0.0.0", port=8080)
+    server.run(host = "0.0.0.0", port=8080, debug=True)

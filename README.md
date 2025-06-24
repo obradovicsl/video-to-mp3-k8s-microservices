@@ -4,17 +4,17 @@
 
 This project is a microservices-based application developed as a hands-on way to dive deep into Kubernetes and the practical side of building and running distributed systems. The app lets a user upload an MP4 video, which then gets converted to MP3 and sent back to them.
 
-The real goal here wasn’t the app logic (which is simple), but to understand how to structure, deploy, and connect multiple services using Kubernetes. Everything runs locally using Minikube, and all core Kubernetes concepts — like Deployments, Services, Ingress, ConfigMaps, and Secrets — are used across the project.
+The real goal here wasn’t the app logic (which is simple), but to understand how to structure, deploy, and connect multiple services using Kubernetes. Each microservice in the system is fully containerized using Docker, and then orchestrated and managed inside a local Kubernetes cluster using Minikube. All core Kubernetes concepts — like Deployments, Services, Ingress, ConfigMaps, and Secrets — are used across the project.
 
 ---
 
 ## 🚀 Technologies Used
-
+* **Flask** – Lightweight Python framework for writing simple web servers and service logic.
+* **Docker** – Used to containerize each individual microservice.
 * **Kubernetes (K8s)** – Core platform for deploying, scaling, and managing containerized applications.
 * **MiniKube** – Used to run a local Kubernetes cluster on a single machine.
 * **kubectl** – CLI tool for interacting with the Kubernetes API.
 * **k9s** – Terminal-based UI to observe and manage Kubernetes resources.
-* **Flask** – Lightweight Python framework for writing simple web servers and service logic.
 * **RabbitMQ** – Message broker for asynchronous communication between services using two queues.
 * **MongoDB** – NoSQL database for storing binary files (videos and MP3s) using GridFS.
 * **MySQL** – Relational database used for managing user credentials and authentication data.

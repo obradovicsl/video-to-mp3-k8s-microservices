@@ -5,7 +5,8 @@ def upload(file, fs, channel, access):
     try:
         fid = fs.put(file)
     except Exception as err:
-        return "internal server error", 500
+        print(err)
+        return f"internal server error {err}", 500
 
     # II) once the file has been uploaded - put a message into a RabbitMQ queue
     message = {
@@ -25,6 +26,7 @@ def upload(file, fs, channel, access):
                 delivery_mode = pika.spec.PERSISTENT_DELIVERY_MODE 
             ),
         )
-    except: 
+    except Exception as err:  
+        print(err)
         fs.delete(fid)
-        return "internal server error", 500
+        return f"internal server error: {err}", 500

@@ -14,7 +14,7 @@ def start(message, fs_videos, fs_mp3s, channel):
     out = fs_videos.get(ObjectId(message["video_fid"]))
 
     #add video contents to empty file
-    tf.write(out.read)
+    tf.write(out.read())
 
     # convert video file (temp file) to audio
     audio = VideoFileClip(tf.name).audio
@@ -35,7 +35,7 @@ def start(message, fs_videos, fs_mp3s, channel):
 
     try:
         channel.basic_publish(
-            exchande="",
+            exchange="",
             routing_key = os.environ.get("MP3_QUEUE"),
             body=json.dumps(message),
             properties=pika.BasicProperties(
